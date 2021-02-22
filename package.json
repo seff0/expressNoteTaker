@@ -10,5 +10,14 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seff0/expressNoteTaker.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/seff0/expressNoteTaker/issues"
+  },
+  "homepage": "https://github.com/seff0/expressNoteTaker#readme"
 }
