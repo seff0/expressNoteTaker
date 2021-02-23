@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+var db = require("./db/db.json");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,18 +18,17 @@ app.get("/notes", (req, res) =>
   res.sendFile(path.join(__dirname, "./public/notes.html"))
 );
 
-app.get("/api/notes", (req, res) =>
-  res.json(JSON.parse(fs.readFileSync("./db/db.json")))
-);
-
-app.post("/api/notes", (req, res) => {
-  const newNote = req.body;
-  const noteDB = JSON.parse(fs.readFileSync("./db/db.json"));
-  const lastNote = noteDB[noteDB.length - 1];
-  newNote.id = parseInt(lastNote.id) + 1;
-  let data = JSON.stringify(newNote);
-  fs.appendFileSync("db.json", data);
-  res.json(newNote);
+app.get("/api/notes", (req, res) => {
+  res.json(db);
 });
 
-app.listen(PORT, () => console.log(`Server is listening on PORT ${PORT}`));
+app.post("/api/notes", (req, res) => {
+  let newNote = req.body;
+  for (i = 0; i < db.length + 2; i++) {
+    req.body.id = i;
+  }
+  db.push(newNote);
+  res.json(db);
+});
+
+app.listen(PORT, () => console.log(`App is listening on PORT ${PORT}`));
